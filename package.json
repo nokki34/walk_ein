@@ -1,0 +1,16 @@
+{
+  "name": "walk_ein",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "tsc": "tsc -b"
+  },
+  "dependencies": {
+    "telegraf": "^4.12.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.1.3",
+    "prettier": "^2.8.8"
+  }
+}
