@@ -1,13 +1,12 @@
 type Timeslot = {
-    date: Date
-    dateString: string
-    assignee?: User
-}
+  date: Date;
+  dateString: string;
+  assignee?: User;
+};
 
 type User = {
-    telegramId: string
-    name: string
-}
+  telegramId: string;
+  name: string;
+};
 
-
-export {Timeslot, User,}
+export { Timeslot, User }; 
