@@ -39,7 +39,12 @@ const getUsers = (): User[] => {
 };
 
 const recoverState = async () => {
-  const db = await recoverDb();
+  const db: State = await recoverDb();
+  Object.values(db.slots).reduce((acc: Record<string, Timeslot>, cur) => {
+    cur.date = new Date(cur.date);
+    acc[cur.dateString as string] = cur;
+    return acc;
+  }, {});
   state = db;
 };
 

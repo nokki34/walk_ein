@@ -17,15 +17,5 @@ const init = async (settings: WalkEinInitSettings) => {
   }
 };
 
-const test = async () => {
-  const FROM = new Date();
-  const TO = new Date(Date.now() + 3600 * 1000 * 24 * 14);
-  const settings = { fromDate: FROM, toDate: TO };
 
-  await init(settings);
-
-  const slots = getSlots();
-  console.log(slots);
-};
-
-export { test };
+export { init };
