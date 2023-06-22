@@ -6,6 +6,11 @@ const addAssignee = (slot: Timeslot, assignee: User) => {
   repo.saveSlot(slot);
 };
 
+const removeAssignee = (slot: Timeslot) => {
+  slot.assignee = undefined;
+  repo.saveSlot(slot);
+};
+
 const getSlots = () => {
   return repo.getSlots();
 };
@@ -24,4 +29,4 @@ const generateTimeSlots = (fromDate: Date, toDate: Date): Timeslot[] => {
   }));
 };
 
-export { addAssignee, getSlots, generateTimeSlots };
+export { addAssignee, removeAssignee, getSlots, generateTimeSlots };

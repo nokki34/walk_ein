@@ -1,5 +1,5 @@
 import { MiddlewareFn, NarrowedContext } from "telegraf";
-import { getSlots } from "../app/time-slots";
+import { addAssignee, getSlots, removeAssignee } from "../app/time-slots";
 import { formatDay } from "./utils";
 
 type Handler = MiddlewareFn<NarrowedContext<any, any>>;
@@ -31,12 +31,70 @@ const schedule: Handler = async (ctx) => {
   ctx.reply("Расписание:" + "\n" + textSlots.join("\n"));
 };
 
-const pick = () => {};
+const pick: Handler = async (ctx, ...rest) => {
+  const slots = getSlots();
+  try {
+    const [_command, indexString] = ctx.update.message.text.split(" ");
+    const index = Number(indexString);
+
+    // checks
+    if (Number.isNaN(index)) {
+      throw new Error("Неверный аргумент(выбери номер из списка /schedule)");
+    }
+
+    const slot = slots[index];
+    if (!slot) {
+      throw new Error(`Слот с номером ${index} не найден`);
+    }
+    if (slot.assignee) {
+      throw new Error(`Этот слот уже занят @${slot.assignee.name}`);
+    }
+
+    await addAssignee(slot, {
+      telegramId: ctx.message.chat.id,
+      name: ctx.message.chat.username,
+    });
+    ctx.reply(`Вы выбрали день: ${formatDay(slot.date)}`);
+  } catch (e) {
+    ctx.reply(e.message);
+  }
+};
+
+const cancel: Handler = async (ctx, ...rest) => {
+  const slots = getSlots();
+  try {
+    const [_command, indexString] = ctx.update.message.text.split(" ");
+    const index = Number(indexString);
+
+    // checks
+    if (Number.isNaN(index)) {
+      throw new Error("Неверный аргумент(выбери номер из списка /schedule)");
+    }
+
+    const slot = slots[index];
+    if (!slot) {
+      throw new Error(`Слот с номером ${index} не найден`);
+    }
+    if (!slot.assignee) {
+      throw new Error(`Этот слот итак свободен`);
+    }
+    if (slot.assignee.telegramId !== ctx.message.chat.id) {
+      throw new Error(`Вы не можете отменить чужую запись`);
+    }
+
+    await removeAssignee(slot);
+    ctx.reply(`Вы отменили день: ${formatDay(slot.date)}`);
+  } catch (e) {
+    ctx.reply(e.message);
+  }
+};
 
 const commands: Record<string, Handler> = {
   greeting,
   help,
   schedule,
+  pick,
+  cancel,
 };
 
 export { commands };
