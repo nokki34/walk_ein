@@ -4,10 +4,10 @@ import { getSlots } from "../app/time-slots";
 import { differenceInDays } from "date-fns";
 import { getUsers } from "../app/repository";
 
-const NOTIFICATION_TIME = "";
+const CRON_HOUR = 12; // 6 PM Bishkek time(+6)
 
 const startCron = (bot: Telegraf) => {
-  cron.schedule("* * * * *", () => {
+  cron.schedule(`* ${CRON_HOUR} * * *`, () => {
     const slots = getSlots();
     const now = new Date();
 
