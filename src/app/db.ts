@@ -5,7 +5,6 @@ import * as fsPromises from "fs/promises";
 const PATH = path.join("db.json");
 
 const hasExistingDb = (): boolean => {
-  console.log(PATH);
   return existsSync(PATH);
 };
 
