@@ -2,10 +2,15 @@ import { Input, MiddlewareFn, NarrowedContext } from "telegraf";
 import { addAssignee, getSlots, removeAssignee } from "../app/time-slots";
 import { formatDay, randomFromArray } from "./utils";
 import * as fs from "fs";
+import { addUser } from "../app/repository";
 
 type Handler = MiddlewareFn<NarrowedContext<any, any>>;
 
-const greeting: Handler = (ctx) => {
+const start: Handler = async (ctx) => {
+  await addUser({
+    telegramId: ctx.message.chat.id,
+    name: ctx.message.chat.username,
+  });
   const msg =
     "Привет! Я отвечаю за то, чтобы Эйн не скучал. Отправь команду /help чтобы узнать больше";
   ctx.reply(msg);
@@ -110,7 +115,7 @@ const cute: Handler = async (ctx) => {
 };
 
 const commands: Record<string, Handler> = {
-  greeting,
+  start,
   help,
   schedule,
   pick,

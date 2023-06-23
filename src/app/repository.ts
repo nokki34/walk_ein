@@ -16,12 +16,12 @@ const saveSlots = async (slots: Timeslot[]) => {
   slots.forEach((slot) => {
     state = { ...state, slots: { ...state.slots, [slot.dateString]: slot } };
   });
-  storeState;
+  await storeState();
 };
 
 const saveSlot = async (slot: Timeslot) => {
   state = { ...state, slots: { ...state.slots, [slot.dateString]: slot } };
-  storeState;
+  await storeState();
 };
 
 const getSlots = (): Timeslot[] => {
@@ -31,7 +31,7 @@ const getSlots = (): Timeslot[] => {
 // users
 const addUser = async (user: User) => {
   state = { ...state, users: { ...state.users, [user.telegramId]: user } };
-  storeState;
+  await storeState();
 };
 
 const getUsers = (): User[] => {
