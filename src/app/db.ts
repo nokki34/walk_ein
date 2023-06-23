@@ -1,6 +1,6 @@
 import { Db, MongoClient, ObjectId } from "mongodb";
 
-const id = new ObjectId(1);
+const id = new ObjectId(3);
 let db: Db;
 
 const initDb = async () => {
