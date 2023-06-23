@@ -1,4 +1,4 @@
-import { hasExistingDb } from "./db";
+import { hasExistingDb, initDb } from "./db";
 import { getSlots, recoverState, saveSlots } from "./repository";
 import { generateTimeSlots } from "./time-slots";
 
@@ -8,7 +8,8 @@ type WalkEinInitSettings = {
 };
 
 const init = async (settings: WalkEinInitSettings) => {
-  const shouldInit = !hasExistingDb();
+  await initDb();
+  const shouldInit = !(await hasExistingDb());
   if (shouldInit) {
     const slots = generateTimeSlots(settings.fromDate, settings.toDate);
     await saveSlots(slots);
@@ -16,6 +17,5 @@ const init = async (settings: WalkEinInitSettings) => {
     await recoverState();
   }
 };
-
 
 export { init };

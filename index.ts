@@ -12,6 +12,7 @@ const start = async () => {
   const settings = { fromDate: FROM, toDate: TO };
 
   await init(settings);
+
   launchBot();
 };
 

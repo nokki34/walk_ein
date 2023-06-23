@@ -1,20 +1,43 @@
-import * as path from "path";
-import { existsSync } from "fs";
-import * as fsPromises from "fs/promises";
+import { Db, MongoClient, ObjectId } from "mongodb";
 
-const PATH = path.join("db.json");
+const id = new ObjectId(1);
+let db: Db;
 
-const hasExistingDb = (): boolean => {
-  return existsSync(PATH);
+const initDb = async () => {
+  const url = process.env.MONGO_LINK || "";
+
+  const client = new MongoClient(url);
+  const dbName = "walk_ein";
+  db = client.db(dbName);
+};
+
+const hasExistingDb = async (): Promise<boolean> => {
+  const data = await db.collection("schedule").findOne(id);
+  return !!data;
 };
 
 const recoverDb = async (): Promise<any> => {
-  const buffer = await fsPromises.readFile(PATH);
-  return JSON.parse(buffer.toString());
+  const data = await db.collection("schedule").findOne(id);
+  console.log(data);
+  return data;
 };
 
-const storeDb = async (db: Object): Promise<void> => {
-  const t = await fsPromises.writeFile(PATH, Buffer.from(JSON.stringify(db)));
+const storeDb = async (data: Object): Promise<void> => {
+  const exists = await hasExistingDb();
+  if (exists) {
+    await db.collection("schedule").replaceOne(
+      { _id: id },
+      {
+        _id: id,
+        ...data,
+      }
+    );
+  } else {
+    await db.collection("schedule").insertOne({
+      _id: id,
+      ...data,
+    });
+  }
 };
 
-export { hasExistingDb, recoverDb, storeDb };
+export { initDb, hasExistingDb, recoverDb, storeDb };
