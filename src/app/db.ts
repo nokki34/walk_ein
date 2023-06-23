@@ -18,7 +18,6 @@ const hasExistingDb = async (): Promise<boolean> => {
 
 const recoverDb = async (): Promise<any> => {
   const data = await db.collection("schedule").findOne(id);
-  console.log(data);
   return data;
 };
 

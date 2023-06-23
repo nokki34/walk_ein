@@ -12,6 +12,7 @@ const init = async (settings: WalkEinInitSettings) => {
   const shouldInit = !(await hasExistingDb());
   if (shouldInit) {
     const slots = generateTimeSlots(settings.fromDate, settings.toDate);
+    console.log(slots);
     await saveSlots(slots);
   } else {
     await recoverState();
