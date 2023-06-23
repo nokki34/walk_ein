@@ -4,7 +4,7 @@ import { startCron } from "./notification";
 
 const commandsDescriptions = [
   {
-    command: "greeting", // done
+    command: "start", // done
     description: "Привет! Я отвечаю за то, чтобы Эйн не скучал.",
   },
   {
@@ -12,7 +12,7 @@ const commandsDescriptions = [
     description:
       "Ты можешь: посмотреть все расписание, чтобы понять какие дни уже заняты, а в какие дни Эйну понадобится твоя помощь!",
   },
-  { command: "cute", description: "random image of Ein" }, // not done
+  { command: "cute", description: "random image of Ein" }, // done
   {
     command: "schedule",
     description: "a list of days and is it already booked", // done
