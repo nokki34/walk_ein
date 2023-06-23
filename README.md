@@ -7,5 +7,5 @@ It requires a Telegram token in .env, see .env.example for key
 
 ### Scripts
  - `dev` - for local development
- - `tsc` - for build
+ - `build` - for build
  - `start` - for starting
