@@ -1,6 +1,10 @@
+import { configDotenv } from "dotenv";
 import { init } from "./src/app";
 import { createBot } from "./src/bot";
-const launchBot = createBot("6067807749:AAFBsJSMgpKTYKHc7ZR9Q7dNoHAH-4P0hgY");
+
+configDotenv();
+
+const launchBot = createBot(process.env.TELEGRAM_TOKEN ?? "");
 
 const start = async () => {
   const FROM = new Date();
