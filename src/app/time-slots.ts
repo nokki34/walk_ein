@@ -12,7 +12,9 @@ const removeAssignee = (slot: Timeslot) => {
 };
 
 const getSlots = () => {
-  return repo.getSlots();
+  const today1200 = new Date();
+  today1200.setHours(0, 0, 0);
+  return repo.getSlots().filter((it) => it.date >= today1200);
 };
 
 const generateTimeSlots = (fromDate: Date, toDate: Date): Timeslot[] => {

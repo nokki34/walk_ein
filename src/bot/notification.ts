@@ -11,15 +11,12 @@ const startCron = (bot: Telegraf) => {
     const slots = getSlots();
     const now = new Date();
 
-    console.log("slots", slots);
     const todaySlot = slots.find(
       (slot) => differenceInDays(slot.date, now) === 0
     );
     if (!todaySlot) {
       return;
     }
-
-    console.log("todaySlot", todaySlot);
 
     if (todaySlot.assignee === undefined) {
       const users = getUsers();

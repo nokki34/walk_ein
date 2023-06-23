@@ -48,7 +48,7 @@ const pick: Handler = async (ctx, ...rest) => {
       throw new Error("Неверный аргумент(выбери номер из списка /schedule)");
     }
 
-    const slot = slots[index];
+    const slot = slots[index - 1];
     if (!slot) {
       throw new Error(`Слот с номером ${index} не найден`);
     }
@@ -77,7 +77,7 @@ const cancel: Handler = async (ctx, ...rest) => {
       throw new Error("Неверный аргумент(выбери номер из списка /schedule)");
     }
 
-    const slot = slots[index];
+    const slot = slots[index - 1];
     if (!slot) {
       throw new Error(`Слот с номером ${index} не найден`);
     }
