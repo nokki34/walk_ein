@@ -12,11 +12,11 @@
     "dev": "yarn tsc && yarn start"
   },
   "dependencies": {
-    "@types/node": "18.13.0",
     "date-fns": "^2.30.0",
     "telegraf": "^4.12.2"
   },
   "devDependencies": {
+    "@types/node": "18.13.0",
     "prettier": "^2.8.8",
     "typescript": "^5.1.3"
   }

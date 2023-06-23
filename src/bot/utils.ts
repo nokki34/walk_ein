@@ -3,4 +3,8 @@ import { ru } from "date-fns/locale";
 
 const formatDay = (date: Date) => format(date, "dd MMMM, EEEE", { locale: ru });
 
-export { formatDay };
+const randomFromArray = (arr: any[]) => {
+  return arr[Math.floor(Math.random() * arr.length)];
+};
+
+export { formatDay, randomFromArray };

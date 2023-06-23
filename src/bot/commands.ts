@@ -1,6 +1,7 @@
-import { MiddlewareFn, NarrowedContext } from "telegraf";
+import { Input, MiddlewareFn, NarrowedContext } from "telegraf";
 import { addAssignee, getSlots, removeAssignee } from "../app/time-slots";
-import { formatDay } from "./utils";
+import { formatDay, randomFromArray } from "./utils";
+import * as fs from "fs";
 
 type Handler = MiddlewareFn<NarrowedContext<any, any>>;
 
@@ -89,12 +90,32 @@ const cancel: Handler = async (ctx, ...rest) => {
   }
 };
 
+const cute: Handler = async (ctx) => {
+  const pics = [
+    "cute_1.jpg",
+    "cute_2.jpg",
+    "cute_3.jpg",
+    "cute_4.jpg",
+    "cute_5.jpg",
+    "cute_6.jpg",
+    "cute_7.jpg",
+    "cute_8.jpg",
+    "cute_9.jpg",
+  ];
+  const basePath = "src/assets/cute/";
+  const pic = randomFromArray(pics);
+  await ctx.replyWithPhoto(
+    Input.fromReadableStream(fs.createReadStream(basePath + pic))
+  );
+};
+
 const commands: Record<string, Handler> = {
   greeting,
   help,
   schedule,
   pick,
   cancel,
+  cute,
 };
 
 export { commands };
