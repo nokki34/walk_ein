@@ -7,7 +7,7 @@ import { getUsers } from "../app/repository";
 const CRON_HOUR = 12; // 6 PM Bishkek time(+6)
 
 const startCron = (bot: Telegraf) => {
-  cron.schedule(`* ${CRON_HOUR} * * *`, () => {
+  cron.schedule(`* ${CRON_HOUR} 0 * *`, () => {
     const slots = getSlots();
     const now = new Date();
 
